@@ -1,0 +1,73 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.8">
+  <diagram name="KnowledgeCity Architecture" id="1">
+    <mxGraphModel dx="1042" dy="510" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cdn" value="Global CDN (CloudFront / Akamai)" style="rounded=1;fillColor=#D5E8D4;strokeColor=#82B366;" parent="1" vertex="1">
+          <mxGeometry x="300" y="20" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dns" value="Geo-DNS / Global Accelerator" style="rounded=1;fillColor=#FFF2CC;strokeColor=#D6B656;" parent="1" vertex="1">
+          <mxGeometry x="300" y="100" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="users" value="Users (Saudi Arabia / US / Others)" style="rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;" parent="1" vertex="1">
+          <mxGeometry x="300" y="180" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_cluster" value="Saudi Arabia Cluster (K8s)" style="rounded=1;fillColor=#F8CECC;strokeColor=#B85450;" parent="1" vertex="1">
+          <mxGeometry x="50" y="290" width="270" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="us_cluster" value="US Cluster (K8s)" style="rounded=1;fillColor=#F8CECC;strokeColor=#B85450;" parent="1" vertex="1">
+          <mxGeometry x="500" y="280" width="270" height="450" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_frontend" value="Frontend (SPA)" style="rounded=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" parent="1" vertex="1">
+          <mxGeometry x="80" y="310" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_backend" value="Backend (PHP Monolith)" style="rounded=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" parent="1" vertex="1">
+          <mxGeometry x="80" y="370" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_analytics" value="Analytics MS (ClickHouse)" style="rounded=1;fillColor=#FFF2CC;strokeColor=#D6B656;" parent="1" vertex="1">
+          <mxGeometry x="80" y="430" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_video" value="Video MS (FFmpeg)" style="rounded=1;fillColor=#FFF2CC;strokeColor=#D6B656;" parent="1" vertex="1">
+          <mxGeometry x="80" y="490" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_db" value="Regional DB (Aurora/MySQL)" style="rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;" parent="1" vertex="1">
+          <mxGeometry x="80" y="550" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="saudi_storage" value="Regional Storage (S3/GCS)" style="rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;" parent="1" vertex="1">
+          <mxGeometry x="80" y="610" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="us_frontend" value="Frontend (SPA)" style="rounded=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" parent="1" vertex="1">
+          <mxGeometry x="530" y="310" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="us_backend" value="Backend (PHP Monolith)" style="rounded=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" parent="1" vertex="1">
+          <mxGeometry x="530" y="370" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="us_analytics" value="Analytics MS (ClickHouse)" style="rounded=1;fillColor=#FFF2CC;strokeColor=#D6B656;" parent="1" vertex="1">
+          <mxGeometry x="530" y="430" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="us_video" value="Video MS (FFmpeg)" style="rounded=1;fillColor=#FFF2CC;strokeColor=#D6B656;" parent="1" vertex="1">
+          <mxGeometry x="530" y="490" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="us_db" value="Regional DB (Aurora/MySQL)" style="rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;" parent="1" vertex="1">
+          <mxGeometry x="530" y="550" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="us_storage" value="Regional Storage (S3/GCS)" style="rounded=1;fillColor=#E1D5E7;strokeColor=#9673A6;" parent="1" vertex="1">
+          <mxGeometry x="530" y="610" width="190" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;" parent="1" source="cdn" target="dns" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;" parent="1" source="dns" target="users" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GWOM0LbNR0ne0Cn8jNjp-2" value="Saudi Arabia" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="125" y="680" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="GWOM0LbNR0ne0Cn8jNjp-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="670" width="100" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

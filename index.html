@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Data Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdfdfd;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Marquee text */
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+            color: #ff66b2;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        @keyframes marquee {
+            0%   { transform: translateX(0%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Form styling */
+        form {
+            display: inline-block;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            margin: 8px 0;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #ff66b2;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e0559f;
+        }
+    </style>
+</head>
+<body>
+    <div class="marquee">
+        <span>sangu love pranati</span>
+    </div>
+
+    <h2>Enter your details</h2>
+
+    <!-- ✅ Stable backend connection inside Minikube using service DNS -->
+    <form action="http://backend-service.practice.svc.cluster.local:3000/submit" method="post">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Phone:</label><br>
+        <input type="text" name="phone" required><br><br>
+
+        <label>Address:</label><br>
+        <input type="text" name="address" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

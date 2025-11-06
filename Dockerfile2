@@ -1,0 +1,16 @@
+# Use official Nginx image
+FROM nginx:alpine
+
+# Set working directory inside the container
+WORKDIR /usr/share/nginx/html
+
+# Remove the default Nginx index page
+RUN rm -rf ./*
+
+# Copy your HTML file into the Nginx web directory
+COPY index.html .
+
+# Expose port 80
+EXPOSE 80
+
+# Nginx automatically starts, no CMD needed
