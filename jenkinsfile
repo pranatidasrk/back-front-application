@@ -2,10 +2,15 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch to build')
-        string(name: 'DOCKER_TAG', defaultValue: 'latest', description: 'Tag for Docker images')
-        choice(name: 'DEPLOY_ENV', choices: ['dev', 'staging', 'prod'], description: 'Choose environment for deployment')
-        string(name: 'EC2_IP', defaultValue: '1.2.3.4', description: 'Target EC2 instance public IP')
+        string(name: 'GIT_BRANCH',
+               defaultValue: 'branch1',
+               description: 'Git branch to checkout')
+        string(name: 'DOCKER_TAG',
+               defaultValue: 'latest',
+               description: 'Docker image tag to build and run')
+        string(name: 'HOST',
+               defaultValue: 'Enter-ip-adress',
+               description: 'Deploy in ec2')
     }
 
     environment {
