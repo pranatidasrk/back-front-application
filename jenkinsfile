@@ -1,8 +1,14 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'Tag for Docker images')
+        choice(name: 'DEPLOY_ENV', choices: ['dev', 'prod'], description: 'Select environment to deploy')
+        booleanParam(name: 'DEPLOY_TO_K8S', defaultValue: true, description: 'Deploy to Kubernetes after build')
+    }
+
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // Jenkins credential ID
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // Jenkins credentials ID
         DOCKERHUB_USER = 'your-dockerhub-username'
         BACKEND_IMAGE = "${DOCKERHUB_USER}/backend-app"
         FRONTEND_IMAGE = "${DOCKERHUB_USER}/frontend-app"
@@ -11,7 +17,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                echo "Checking out code from repository..."
+                echo "Checking out repository..."
                 checkout scm
             }
         }
@@ -19,8 +25,11 @@ pipeline {
         stage('Build Backend Docker Image') {
             steps {
                 script {
+                    echo "Building backend image with tag: ${params.IMAGE_TAG}"
                     dir('backend') {
-                        sh 'docker build -t $BACKEND_IMAGE:latest .'
+                        sh """
+                            docker build -t $BACKEND_IMAGE:${params.IMAGE_TAG} .
+                        """
                     }
                 }
             }
@@ -29,8 +38,11 @@ pipeline {
         stage('Build Frontend Docker Image') {
             steps {
                 script {
+                    echo "Building frontend image with tag: ${params.IMAGE_TAG}"
                     dir('frontend') {
-                        sh 'docker build -t $FRONTEND_IMAGE:latest .'
+                        sh """
+                            docker build -t $FRONTEND_IMAGE:${params.IMAGE_TAG} .
+                        """
                     }
                 }
             }
@@ -39,10 +51,11 @@ pipeline {
         stage('Push Images to Docker Hub') {
             steps {
                 script {
+                    echo "Pushing images to Docker Hub..."
                     sh """
                         echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                        docker push $BACKEND_IMAGE:latest
-                        docker push $FRONTEND_IMAGE:latest
+                        docker push $BACKEND_IMAGE:${params.IMAGE_TAG}
+                        docker push $FRONTEND_IMAGE:${params.IMAGE_TAG}
                         docker logout
                     """
                 }
@@ -50,13 +63,18 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
+            when {
+                expression { params.DEPLOY_TO_K8S }
+            }
             steps {
                 script {
-                    echo "Deploying backend and frontend to Kubernetes..."
+                    echo "Deploying to ${params.DEPLOY_ENV} environment..."
                     sh """
                         kubectl apply -f k8s/mysql-deployment.yaml
                         kubectl apply -f k8s/backend-deployment.yaml
                         kubectl apply -f k8s/frontend-deployment.yaml
+                        kubectl set image deployment/backend-deployment backend-container=$BACKEND_IMAGE:${params.IMAGE_TAG} -n practice
+                        kubectl set image deployment/frontend-deployment frontend-container=$FRONTEND_IMAGE:${params.IMAGE_TAG} -n practice
                     """
                 }
             }
@@ -65,10 +83,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Deployment successful!'
+            echo "✅ Pipeline completed successfully!"
         }
         failure {
-            echo '❌ Deployment failed!'
+            echo "❌ Pipeline failed. Check logs for details."
         }
     }
 }
