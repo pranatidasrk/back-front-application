@@ -1,12 +1,17 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'Tag for Docker images')
-        choice(name: 'DEPLOY_ENV', choices: ['dev', 'prod'], description: 'Select environment to deploy')
-        booleanParam(name: 'DEPLOY_TO_K8S', defaultValue: true, description: 'Deploy to Kubernetes after build')
-    }
-
+   parameters {
+        string(name: 'GIT_BRANCH',
+               defaultValue: 'branch1',
+               description: 'Git branch to checkout')
+        string(name: 'DOCKER_TAG',
+               defaultValue: 'latest',
+               description: 'Docker image tag to build and run')
+       string(name: 'HOST',
+               defaultValue: 'Enter-ip-address',
+               description: 'Deploy in EC2')
+}
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // Jenkins credentials ID
         DOCKERHUB_USER = 'your-dockerhub-username'
